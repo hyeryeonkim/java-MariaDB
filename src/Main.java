@@ -62,7 +62,8 @@ class App {
 		}
 		Factory.getScanner().close();
 		
-		//화이팅!!! 
+		//화이팅!!! dddd////
+		//
 	}
 }
 
