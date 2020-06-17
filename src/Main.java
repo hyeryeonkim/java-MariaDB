@@ -38,7 +38,7 @@ class App {
 		
 		while (true) {
 			
-			System.out.printf("¸í·É¾î : ");
+			System.out.printf("ëª…ë ¹ì–´ : ");
 			String command = Factory.getScanner().nextLine().trim();
 
 			if (command.length() == 0) {
@@ -50,19 +50,19 @@ class App {
 			Request request = new Request(command);
 
 			if (request.isValidRequest() == false) {
-				System.out.println("< ´Ù½Ã ÀÔ·Â¹Ù¶ø´Ï´Ù. >");
+				System.out.println("< ë‹¤ì‹œ ì…ë ¥ë°”ëë‹ˆë‹¤. >");
 				continue;
 			}
 
 			if (controllers.containsKey(request.getControllerName()) == false) {
-				System.out.println("< ´Ù½Ã ÀÔ·Â¹Ù¶ø´Ï´Ù. >");
+				System.out.println("< ë‹¤ì‹œ ì…ë ¥ë°”ëë‹ˆë‹¤. >");
 				continue;
 			}
 			controllers.get(request.getControllerName()).doAction(request);
 		}
 		Factory.getScanner().close();
 		
-		
+		//í™”ì´íŒ…!!! 
 	}
 }
 
@@ -76,21 +76,21 @@ class DBConnection {
 		String driverName = "com.mysql.cj.jdbc.Driver";
 		
 		try {
-			// ¨ç ·Îµå(Ä«Ä«¿À ÅÃ½Ã¿¡ `com.mysql.cj.jdbc.Driver` ¶ó´Â ½ÇÁ¦ ÅÃ½Ã µå¶óÀÌ¹ö¸¦ µî·Ï)
-			// ÇÏÁö¸¸ °³¹ßÀÚ´Â ½ÇÁ¦·Î `com.mysql.cj.jdbc.Driver`¸¦ ´Ù·ê ÀÏÀº ¾ø´Ù.
-			// ³»ºÎÀûÀ¸·Î JDBC°¡ ¾Ë¾Æ¼­ ´Ù ÇØÁÖ±â ¶§¹®¿¡ ¿ì¸®´Â JDBCÀÇ DriverManager ¸¦ ÅëÇØ¼­ DB¿ÍÀÇ ¿¬°áÀ» ¾òÀ¸¸é µÈ´Ù.
+			// â‘  ë¡œë“œ(ì¹´ì¹´ì˜¤ íƒì‹œì— `com.mysql.cj.jdbc.Driver` ë¼ëŠ” ì‹¤ì œ íƒì‹œ ë“œë¼ì´ë²„ë¥¼ ë“±ë¡)
+			// í•˜ì§€ë§Œ ê°œë°œìëŠ” ì‹¤ì œë¡œ `com.mysql.cj.jdbc.Driver`ë¥¼ ë‹¤ë£° ì¼ì€ ì—†ë‹¤.
+			// ë‚´ë¶€ì ìœ¼ë¡œ JDBCê°€ ì•Œì•„ì„œ ë‹¤ í•´ì£¼ê¸° ë•Œë¬¸ì— ìš°ë¦¬ëŠ” JDBCì˜ DriverManager ë¥¼ í†µí•´ì„œ DBì™€ì˜ ì—°ê²°ì„ ì–»ìœ¼ë©´ ëœë‹¤.
 			Class.forName(driverName);
 
-			// ¨è ¿¬°á
+			// â‘¡ ì—°ê²°
 			connection = DriverManager.getConnection(url, user, password);
 		} catch (ClassNotFoundException e) {
-			// `com.mysql.cj.jdbc.Driver` ¶ó´Â Å¬·¡½º°¡ ¶óÀÌºê·¯¸®·Î Ãß°¡µÇÁö ¾Ê¾Ò´Ù¸é ¿À·ù¹ß»ı
-			System.out.println("[·Îµå ¿À·ù]\n" + e.getStackTrace());
+			// `com.mysql.cj.jdbc.Driver` ë¼ëŠ” í´ë˜ìŠ¤ê°€ ë¼ì´ë¸ŒëŸ¬ë¦¬ë¡œ ì¶”ê°€ë˜ì§€ ì•Šì•˜ë‹¤ë©´ ì˜¤ë¥˜ë°œìƒ
+			System.out.println("[ë¡œë“œ ì˜¤ë¥˜]\n" + e.getStackTrace());
 		} catch (SQLException e) {
-			// DBÁ¢¼ÓÁ¤º¸°¡ Æ²·È´Ù¸é ¿À·ù¹ß»ı
-			System.out.println("[¿¬°á ¿À·ù]\n" + e.getStackTrace());
+			// DBì ‘ì†ì •ë³´ê°€ í‹€ë ¸ë‹¤ë©´ ì˜¤ë¥˜ë°œìƒ
+			System.out.println("[ì—°ê²° ì˜¤ë¥˜]\n" + e.getStackTrace());
 		}
-		System.out.println("< MariaDB ¿¬°á ¼º°ø! > ");
+		System.out.println("< MariaDB ì—°ê²° ì„±ê³µ! > ");
 	}
 
 	public int selectRowIntValue(String sql) {
@@ -141,7 +141,7 @@ class DBConnection {
 	}
 
 	public List<Map<String, Object>> selectRows(String sql) {
-		// SQLÀ» Àû´Â ¹®¼­ÆÄÀÏ
+		// SQLì„ ì ëŠ” ë¬¸ì„œíŒŒì¼
 		Statement statement = null;
 		ResultSet rs = null;
 
@@ -150,21 +150,21 @@ class DBConnection {
 		try {
 			statement = connection.createStatement();
 			rs = statement.executeQuery(sql);
-			// ResultSet ÀÇ MetaData¸¦ °¡Á®¿Â´Ù.
+			// ResultSet ì˜ MetaDataë¥¼ ê°€ì ¸ì˜¨ë‹¤.
 			ResultSetMetaData metaData = rs.getMetaData();
-			// ResultSet ÀÇ ColumnÀÇ °¹¼ö¸¦ °¡Á®¿Â´Ù.
+			// ResultSet ì˜ Columnì˜ ê°¯ìˆ˜ë¥¼ ê°€ì ¸ì˜¨ë‹¤.
 			int columnSize = metaData.getColumnCount();
 
-			// rsÀÇ ³»¿ëÀ» µ¹·ÁÁØ´Ù.
+			// rsì˜ ë‚´ìš©ì„ ëŒë ¤ì¤€ë‹¤.
 			while (rs.next()) {
-				// ³»ºÎ¿¡¼­ mapÀ» ÃÊ±âÈ­
+				// ë‚´ë¶€ì—ì„œ mapì„ ì´ˆê¸°í™”
 				Map<String, Object> row = new HashMap<>();
 
 				for (int columnIndex = 0; columnIndex < columnSize; columnIndex++) {
 					String columnName = metaData.getColumnName(columnIndex + 1);
 					Object value = rs.getObject(columnName);
 					if ( value instanceof Long ) {
-						int numValue = (int)(long)value; //ObjectÇü
+						int numValue = (int)(long)value; //Objectí˜•
 						row.put(columnName, numValue);
 					}
 					else if ( value instanceof Timestamp ) {
@@ -175,14 +175,14 @@ class DBConnection {
 					else {
 						row.put(columnName, columnName);
 					}
-					// map¿¡ °ªÀ» ÀÔ·Â map.put(columnName, columnNameÀ¸·Î getString)
+					// mapì— ê°’ì„ ì…ë ¥ map.put(columnName, columnNameìœ¼ë¡œ getString)
 					
 				}
-				// list¿¡ ÀúÀå
+				// listì— ì €ì¥
 				rows.add(row);
 			}
 		} catch (SQLException e) {
-			System.err.printf("[SELECT Äõ¸® ¿À·ù, %s]\n" + e.getStackTrace() + "\n", sql);
+			System.err.printf("[SELECT ì¿¼ë¦¬ ì˜¤ë¥˜, %s]\n" + e.getStackTrace() + "\n", sql);
 		}
 
 		try {
@@ -194,24 +194,24 @@ class DBConnection {
 				rs.close();
 			}
 		} catch (SQLException e) {
-			System.err.println("[SELECT Á¾·á ¿À·ù]\n" + e.getStackTrace());
+			System.err.println("[SELECT ì¢…ë£Œ ì˜¤ë¥˜]\n" + e.getStackTrace());
 		}
 
 		return rows;
 	}
 
 	public int update(String sql) {
-		// UPDATE ¸í·ÉÀ¸·Î ¸î°³ÀÇ µ¥ÀÌÅÍ°¡ ¼öÁ¤µÇ¾ú´ÂÁö
+		// UPDATE ëª…ë ¹ìœ¼ë¡œ ëª‡ê°œì˜ ë°ì´í„°ê°€ ìˆ˜ì •ë˜ì—ˆëŠ”ì§€
 		int affectedRows = 0;
 
-		// SQLÀ» Àû´Â ¹®¼­ÆÄÀÏ
+		// SQLì„ ì ëŠ” ë¬¸ì„œíŒŒì¼
 		Statement statement = null;
 
 		try {
 			statement = connection.createStatement();
 			affectedRows = statement.executeUpdate(sql);
 		} catch (SQLException e) {
-			System.err.printf("[UPDATE Äõ¸® ¿À·ù, %s]\n" + e.getStackTrace() + "\n", sql);
+			System.err.printf("[UPDATE ì¿¼ë¦¬ ì˜¤ë¥˜, %s]\n" + e.getStackTrace() + "\n", sql);
 		}
 
 		try {
@@ -219,7 +219,7 @@ class DBConnection {
 				statement.close();
 			}
 		} catch (SQLException e) {
-			System.err.println("[UPDATE Á¾·á ¿À·ù]\n" + e.getStackTrace());
+			System.err.println("[UPDATE ì¢…ë£Œ ì˜¤ë¥˜]\n" + e.getStackTrace());
 		}
 
 		return affectedRows;
@@ -228,9 +228,9 @@ class DBConnection {
 	public int insert(String sql) {
 		int id = -1;
 
-		// SQLÀ» Àû´Â ¹®¼­ÆÄÀÏ
+		// SQLì„ ì ëŠ” ë¬¸ì„œíŒŒì¼
 		Statement statement = null;
-		// SQLÀÇ ½ÇÇà°á°ú º¸°í¼­
+		// SQLì˜ ì‹¤í–‰ê²°ê³¼ ë³´ê³ ì„œ
 		ResultSet rs = null;
 
 		try {
@@ -241,7 +241,7 @@ class DBConnection {
 				id = rs.getInt(1);
 			}
 		} catch (SQLException e) {
-			System.err.printf("[INSERT Äõ¸® ¿À·ù, %s]\n" + e.getStackTrace() + "\n", sql);
+			System.err.printf("[INSERT ì¿¼ë¦¬ ì˜¤ë¥˜, %s]\n" + e.getStackTrace() + "\n", sql);
 		}
 
 		try {
@@ -253,7 +253,7 @@ class DBConnection {
 				rs.close();
 			}
 		} catch (SQLException e) {
-			System.err.println("[INSERT Á¾·á ¿À·ù]\n" + e.getStackTrace());
+			System.err.println("[INSERT ì¢…ë£Œ ì˜¤ë¥˜]\n" + e.getStackTrace());
 		}
 
 		return id;
@@ -265,7 +265,7 @@ class DBConnection {
 				connection.close();
 			}
 		} catch (SQLException e) {
-			System.err.println("[´İ±â ¿À·ù]\n" + e.getStackTrace());
+			System.err.println("[ë‹«ê¸° ì˜¤ë¥˜]\n" + e.getStackTrace());
 		}
 	}
 }
@@ -307,44 +307,44 @@ class ArticleController extends Controller {
 	}
 	private void actionArticleDetail(Request request) {
 		int articleId = Integer.parseInt(request.getArg1());
-		System.out.println("\t\t== °Ô½Ã¹° »ó¼¼º¸±â ==\n");
+		System.out.println("\t\t== ê²Œì‹œë¬¼ ìƒì„¸ë³´ê¸° ==\n");
 		List<Map<String, Object>> rows = articleService.getSelectRows("SELECT * FROM article WHERE id = " + articleId );
-		if ( rows.isEmpty()) {  // ¿À........ ÁÁÀºµğ...... 
-			System.out.println("Á¸ÀçÇÏÁö ¾Ê´Â °Ô½Ã¹° ÀÔ´Ï´Ù.");
+		if ( rows.isEmpty()) {  // ì˜¤........ ì¢‹ì€ë””...... 
+			System.out.println("ì¡´ì¬í•˜ì§€ ì•ŠëŠ” ê²Œì‹œë¬¼ ì…ë‹ˆë‹¤.");
 			return;
 		}
 		System.out.println(rows);
-		System.out.println("¹øÈ£  |           ³¯Â¥                 |            Á¦¸ñ              |       ³»¿ë  ");
+		System.out.println("ë²ˆí˜¸  |           ë‚ ì§œ                 |            ì œëª©              |       ë‚´ìš©  ");
 		for ( Map<String, Object> map : rows ) {
 			System.out.printf( " %-2d | %-10s  | %-15s               | %-15s  \n", map.get("id"), map.get("regDate"), map.get("title"), map.get("body"));
 		}
 	}  
 	private void actionArticleDelete(Request request) {
-		System.out.println("== °Ô½Ã¹° »èÁ¦ ==");
+		System.out.println("== ê²Œì‹œë¬¼ ì‚­ì œ ==");
 		int articleId = Integer.parseInt(request.getArg1());
 		int id = articleService.getArticleInsert("DELETE FROM article WHERE id = " + articleId );
-		System.out.println("== °Ô½Ã¹° »èÁ¦ ¿Ï·á ==");		
+		System.out.println("== ê²Œì‹œë¬¼ ì‚­ì œ ì™„ë£Œ ==");		
 	}
 	private void actionArticleModify(Request request) {
 		int articleId = Integer.parseInt(request.getArg1());
 		List<Map<String, Object>> rows = articleService.getSelectRows("SELECT * FROM article WHERE id = " + articleId );
 		if ( rows.isEmpty()) {
-			System.out.println("Á¸ÀçÇÏÁö ¾Ê´Â °Ô½Ã¹° ÀÔ´Ï´Ù.");
+			System.out.println("ì¡´ì¬í•˜ì§€ ì•ŠëŠ” ê²Œì‹œë¬¼ ì…ë‹ˆë‹¤.");
 			return;
 		}
 		String title;
 		String body;
-		System.out.println("== °Ô½Ã¹° ¼öÁ¤ ==");
-		System.out.printf("Á¦¸ñ : ");
+		System.out.println("== ê²Œì‹œë¬¼ ìˆ˜ì • ==");
+		System.out.printf("ì œëª© : ");
 		title = Factory.getScanner().nextLine().trim();
-		System.out.printf("³»¿ë : ");
+		System.out.printf("ë‚´ìš© : ");
 		body = Factory.getScanner().nextLine().trim();
 		int id = articleService.getArticleInsert("UPDATE article SET title = '" + title + "', `body` = '" + body + "' WHERE id = " + articleId  );
 	}
 	private void actionArticleList(Request request) {
-		System.out.println("\t\t== °Ô½Ã¹° ¸®½ºÆ® ==\n");
+		System.out.println("\t\t== ê²Œì‹œë¬¼ ë¦¬ìŠ¤íŠ¸ ==\n");
 		List<Map<String, Object>> rows = articleService.getSelectRows("SELECT * FROM article ORDER BY id DESC");
-		System.out.println("¹øÈ£  |           ³¯Â¥                 |            Á¦¸ñ           ");
+		System.out.println("ë²ˆí˜¸  |           ë‚ ì§œ                 |            ì œëª©           ");
 		for ( Map<String, Object> map : rows ) {
 			System.out.printf( " %-2d | %-10s  | %-15s    \n", map.get("id"), map.get("regDate"), map.get("title"));
 		}
@@ -352,10 +352,10 @@ class ArticleController extends Controller {
 	private void actionArticleWrite(Request request) {
 		String title;
 		String body;
-		System.out.println("== °Ô½Ã¹° ÀÛ¼º ==");
-		System.out.printf("Á¦¸ñ :");
+		System.out.println("== ê²Œì‹œë¬¼ ì‘ì„± ==");
+		System.out.printf("ì œëª© :");
 		title = Factory.getScanner().nextLine().trim();
-		System.out.printf("³»¿ë : ");
+		System.out.printf("ë‚´ìš© : ");
 		body = Factory.getScanner().nextLine().trim();
 		int newId = articleService.getArticleInsert("INSERT INTO article SET title = '" + title + "', regDate = NOW(), `body` = '" + body +"'" );
 		
@@ -476,7 +476,7 @@ class Request {
 		return actionName != null;
 	}
 }
-//°øÀ¯ÇÏ´Â ¸ğµç °´Ã¼¸®¸ğÄÜÀ» º¸°üÇÏ´Â Å¬·¡½º
+//ê³µìœ í•˜ëŠ” ëª¨ë“  ê°ì²´ë¦¬ëª¨ì½˜ì„ ë³´ê´€í•˜ëŠ” í´ë˜ìŠ¤
 class Factory {
 	static ArticleService articleService;
 	static Session session;
